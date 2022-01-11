@@ -1,0 +1,2 @@
+This is my very first project that I am making myself from the beginning. Before this, I've only created stuff following instructions. Let's see what happens!
+The final product will be a fully playable game of TicTacToe with three difficulty settings.
