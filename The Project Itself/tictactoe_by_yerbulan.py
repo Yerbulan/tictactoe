@@ -21,12 +21,13 @@ def run_game():
 	while True:
 		tf.check_events()
 		
-		# III. IF THE GAME IS STARTED CALL CHOOSE DIFFICULTY MODULE
 		# IV. IF THE DIFFICULTY WAS CHOSEN CALL THE GAME MODULE WHERE OPPONENT IS A CLASS WITH THE RIGHT CLASS FOR THE DIFFICULTY LEVEL
 		# V. IF THE GAME IS OVER (WIN, LOSE, OR DRAW) CALL THE GAME OVER MODULE WHICH RECORD THE RESULT AND LETS YOU CHOOSE TO START OVER (CHOOSE DIFFICULTY MODULE) OR EXIT
 		
 		# Redraw the screen during each pass through the loop.
 		screen.fill(game_settings.bg_color_in_game)
+		
+		
 		pygame.display.flip()
 
 run_game()
