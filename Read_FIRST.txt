@@ -1,0 +1,8 @@
+Okay, things have almost gotten a bit messy.
+
+Create a game architecture file
+
+
+
+
+1. CHANGE DIFFICULTY CHOICE TO ACTUALLY PROCEED WITH CERTAIN PARAMETERS
