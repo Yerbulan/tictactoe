@@ -17,3 +17,4 @@ class Settings():
 		# dark shade of the button
 		self.color_dark = (100,100,100)
 		self.color_white = (255,255,255)
+		self.players_turn = True

@@ -2,13 +2,11 @@ import sys
 
 import pygame
 
-def check_events(screen, game_settings):
-	"""Respond to keypresses."""
-	# stores the width of the screen as defined in ttt_settings into a variable
-	width = screen.get_width()
+import random
 
-	# stores the height of the screen as defined in ttt_settings into a variable
-	height = screen.get_height()
+def check_events(screen,width,height, game_settings):
+	"""Respond to keypresses."""
+
 
 	# stores the (x,y) coordinates into the variable as a tuple
 	mouse = pygame.mouse.get_pos()
@@ -17,18 +15,21 @@ def check_events(screen, game_settings):
 		if event.type == pygame.QUIT:
 			sys.exit()
 		# checks if a mouse is clicked
-		if event.type == pygame.MOUSEBUTTONDOWN:
-			# if the mouse is clicked on the first square the square is filled
-			if width/4 <= mouse[0] <= width/10*4 and height/10 <= mouse[1] <= height/10*3:
-				draw_x(screen, game_settings, width/4+20, height/10*2+50)
-		
-def start_menu_screen(screen, game_settings):
+		if game_settings.players_turn:
+			player_input(game_settings, screen, width, height, mouse, event)
+		else:
+			pc_turn()
+			
 
-	# stores the width of the screen as defined in ttt_settings into a variable
-	width = screen.get_width()
+def click_boxes(game_settings, screen, width,height, mouse):
+	# if the mouse is clicked on the first square the square is filled
+	if width/4 <= mouse[0] <= width/10*4 and height/10 <= mouse[1] <= height/10*3:
+		draw_player(screen, game_settings, width/4+20, height/10*2+50)
+	elif width/10*4 <= mouse[0] <= width/10*6 and height/10 <= mouse[1] <= height/10*3:
+		draw_player(screen, game_settings, width/4+20, height/10*2+50)
 
-	# stores the height of the screen as defined in ttt_settings into a variable
-	height = screen.get_height()
+
+def start_menu_screen(screen,width,height, game_settings):
 
 	# rendering a text written in font as defined in ttt_settings
 	quit_text = game_settings.start_menu_font.render('quit' , True , game_settings.font_color)
@@ -77,13 +78,7 @@ def start_menu_screen(screen, game_settings):
 		# updates the frames of the game
 		pygame.display.update()
 
-def difficulty_screen(screen, game_settings):
-
-	# stores the width of the screen as defined in ttt_settings into a variable
-	width = screen.get_width()
-
-	# stores the height of the screen as defined in ttt_settings into a variable
-	height = screen.get_height()
+def difficulty_screen(screen, width,height, game_settings):
 
 	# rendering a text written in font as defined in ttt_settings
 	easy_dif_text = game_settings.start_menu_font.render('easy' , True , game_settings.font_color)
@@ -142,22 +137,20 @@ def difficulty_screen(screen, game_settings):
 		# updates the frames of the game
 		pygame.display.update()
 
-def x_or_o(screen, game_settings):
-
-	# stores the width of the screen as defined in ttt_settings into a variable
-	width = screen.get_width()
-
-	# stores the height of the screen as defined in ttt_settings into a variable
-	height = screen.get_height()
+def x_or_o(screen,width,height, game_settings):
 
 	# rendering a text written in font as defined in ttt_settings
 	choose_x = game_settings.start_menu_font.render('X' , True , game_settings.font_color)
 	choose_o = game_settings.start_menu_font.render('O' , True , game_settings.font_color)
+	choose_turn_text = game_settings.start_menu_font.render('Choose either X or O. Turn order will be decided randomly.' , True , game_settings.font_color)
+	choose_turn(game_settings)
 
 	while True:
 		
 		screen.fill(game_settings.bg_color)
 
+		screen.blit(choose_turn_text, (width/2-500,height/3-100))
+		
 		for ev in pygame.event.get():
 			
 			if ev.type == pygame.QUIT:
@@ -168,11 +161,11 @@ def x_or_o(screen, game_settings):
 
 				#determines whether the player is usin x's or o's
 				if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:
-					#CHANGE THIS TO PROCEED WITH CERTAIN PARAMETERS LATER!
+					player_x = True
 					return
 
 				if width/2 <= mouse[0] <= width/2+140 and height/3+60 <= mouse[1] <= height/3+100:
-					#CHANGE THIS TO PROCEED WITH CERTAIN PARAMETERS LATER!
+					player_x = False
 					return
 
 		# stores the (x,y) coordinates into the variable as a tuple
@@ -196,12 +189,7 @@ def x_or_o(screen, game_settings):
 		# updates the frames of the game
 		pygame.display.update()
 
-def draw_board(screen, game_settings):
-	# stores the width of the screen as defined in ttt_settings into a variable
-	width = screen.get_width()
-
-	# stores the height of the screen as defined in ttt_settings into a variable
-	height = screen.get_height()
+def draw_board(screen,width,height, game_settings):
 
 	#drawing_the_board
 	pygame.draw.line(screen,game_settings.color_white,(width/4,height/10*3), (width/2+width/4,height/10*3),8)
@@ -211,19 +199,26 @@ def draw_board(screen, game_settings):
 
 	pygame.display.update()
 
-def draw_x(screen, game_settings, x_pos, y_pos):
+def draw_player(screen, game_settings, x_pos, y_pos):
 	"""" Draws either an x or an or or on a given surface and coordinates"""
-	# stores the width of the screen as defined in ttt_settings into a variable
-	width = screen.get_width()
-
-	# stores the height of the screen as defined in ttt_settings into a variable
-	height = screen.get_height()
-
-	pygame.draw.line(screen,game_settings.color_white,(x_pos, y_pos), (x_pos+100, y_pos-100),12)
-	pygame.draw.line(screen, game_settings.color_white, (x_pos,  y_pos - 100), (x_pos + 100, y_pos), 12)
-
+	if player_x:
+		pygame.draw.line(screen,game_settings.color_white,(x_pos, y_pos), (x_pos+100, y_pos-100),12)
+		pygame.draw.line(screen, game_settings.color_white, (x_pos,  y_pos - 100), (x_pos + 100, y_pos), 12)
+	else:
+		pygame.draw.circle(screen,game_settings.color_white,(x_pos, y_pos), 12)
+	
 	pygame.display.update()
 
+def choose_turn(game_settings):
+	game_settings.players_turn = random.choice([True,False])
+	return
+
+def pc_turn():
+	print("Yeah")
+
+def player_input(game_settings, screen, width, height, mouse, event):
+	if event.type == pygame.MOUSEBUTTONDOWN:
+		click_boxes(game_settings, screen, width, height, mouse)
 
 
 

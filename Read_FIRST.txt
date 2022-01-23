@@ -6,3 +6,4 @@ Create a game architecture file
 
 
 1. CHANGE DIFFICULTY CHOICE TO ACTUALLY PROCEED WITH CERTAIN PARAMETERS
+2. X's and O's should also do the thing they are supposed to do
