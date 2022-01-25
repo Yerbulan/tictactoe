@@ -18,3 +18,8 @@ class Settings():
 		self.color_dark = (100,100,100)
 		self.color_white = (255,255,255)
 		self.players_turn = True
+		self.player_x = False
+		self.diff_level = 1
+		self.available_squares = ["a1","a2","a3", "b1", "b2", "b3", "c1", "c2", "c3"]
+		self.computers_squares = []
+		self.players_squares = []

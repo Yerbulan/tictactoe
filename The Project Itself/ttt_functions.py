@@ -4,9 +4,9 @@ import pygame
 
 import random
 
+
 def check_events(screen,width,height, game_settings):
 	"""Respond to keypresses."""
-
 
 	# stores the (x,y) coordinates into the variable as a tuple
 	mouse = pygame.mouse.get_pos()
@@ -18,16 +18,38 @@ def check_events(screen,width,height, game_settings):
 		if game_settings.players_turn:
 			player_input(game_settings, screen, width, height, mouse, event)
 		else:
-			pc_turn()
+			pc_turn(game_settings, screen, width, height, mouse, event)
 			
 
 def click_boxes(game_settings, screen, width,height, mouse):
 	# if the mouse is clicked on the first square the square is filled
 	if width/4 <= mouse[0] <= width/10*4 and height/10 <= mouse[1] <= height/10*3:
-		draw_player(screen, game_settings, width/4+20, height/10*2+50)
+		the_move = "a1"
+		draw_player(screen, game_settings, width/4+30, height/10*2+50, the_move)
 	elif width/10*4 <= mouse[0] <= width/10*6 and height/10 <= mouse[1] <= height/10*3:
-		draw_player(screen, game_settings, width/4+20, height/10*2+50)
-
+		the_move = "a2"
+		draw_player(screen, game_settings, width/10*4+70, height/10*2+50, the_move)
+	elif width/10*6 <= mouse[0] <= width/10*8 and height/10 <= mouse[1] <= height/10*3:
+		the_move = "a3"
+		draw_player(screen, game_settings, width/10*6+30, height/10*2+50, the_move)
+	elif width/4 <= mouse[0] <= width/10*4 and height/10*3 <= mouse[1] <= height/10*6:
+		the_move = "b1"
+		draw_player(screen, game_settings, width/4+30, height/10*3+170, the_move)
+	elif width/10*4 <= mouse[0] <= width/10*6 and height/10*3 <= mouse[1] <= height/10*6:
+		the_move = "b2"
+		draw_player(screen, game_settings, width/10*4+70, height/10*3+170, the_move)
+	elif width/10*6 <= mouse[0] <= width/10*8 and height/10*3 <= mouse[1] <= height/10*6:
+		the_move = "b3"
+		draw_player(screen, game_settings, width/10*6+30, height/10*3+170, the_move)
+	elif width/4 <= mouse[0] <= width/10*4 and height/10*6 <= mouse[1] <= height/10*8:
+		the_move = "c1"
+		draw_player(screen, game_settings, width/4+30, height/10*6+130, the_move)
+	elif width/10*4 <= mouse[0] <= width/10*6 and height/10*6 <= mouse[1] <= height/10*8:
+		the_move = "c2"
+		draw_player(screen, game_settings, width/10*4+70, height/10*6+130, the_move)
+	elif width/10*6 <= mouse[0] <= width/10*8 and height/10*6 <= mouse[1] <= height/10*8:
+		the_move = "c3"
+		draw_player(screen, game_settings, width/10*6+30, height/10*6+130, the_move)
 
 def start_menu_screen(screen,width,height, game_settings):
 
@@ -99,15 +121,15 @@ def difficulty_screen(screen, width,height, game_settings):
 				
 				#launches the game with different parameters depending on the chosen difficulty
 				if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:
-					#CHANGE THIS TO PROCEED WITH CERTAIN PARAMETERS LATER!
+					game_settings.diff_level = 1
 					return
 
 				if width/2 <= mouse[0] <= width/2+140 and height/3+60 <= mouse[1] <= height/3+100:
-					#CHANGE THIS TO PROCEED WITH CERTAIN PARAMETERS LATER!
+					game_settings.diff_level = 2
 					return
 
 				if width/2 <= mouse[0] <= width/2+140 and height/3+120 <= mouse[1] <= height/3+160:
-					#CHANGE THIS TO PROCEED WITH CERTAIN PARAMETERS LATER!
+					game_settings.diff_level = 3
 					return
 					
 		# stores the (x,y) coordinates into the variable as a tuple
@@ -161,11 +183,11 @@ def x_or_o(screen,width,height, game_settings):
 
 				#determines whether the player is usin x's or o's
 				if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:
-					player_x = True
+					game_settings.player_x = True
 					return
 
 				if width/2 <= mouse[0] <= width/2+140 and height/3+60 <= mouse[1] <= height/3+100:
-					player_x = False
+					game_settings.player_x = False
 					return
 
 		# stores the (x,y) coordinates into the variable as a tuple
@@ -199,26 +221,145 @@ def draw_board(screen,width,height, game_settings):
 
 	pygame.display.update()
 
-def draw_player(screen, game_settings, x_pos, y_pos):
+def draw_player(screen, game_settings, x_pos, y_pos, the_move):
 	"""" Draws either an x or an or or on a given surface and coordinates"""
-	if player_x:
-		pygame.draw.line(screen,game_settings.color_white,(x_pos, y_pos), (x_pos+100, y_pos-100),12)
-		pygame.draw.line(screen, game_settings.color_white, (x_pos,  y_pos - 100), (x_pos + 100, y_pos), 12)
-	else:
-		pygame.draw.circle(screen,game_settings.color_white,(x_pos, y_pos), 12)
+	if (the_move) in game_settings.available_squares:
+		game_settings.available_squares.remove (the_move)
+		game_settings.players_squares.append (the_move)
+		game_settings.players_turn = False
+		if game_settings.player_x:
+			pygame.draw.line(screen,game_settings.color_white,(x_pos, y_pos), (x_pos+100, y_pos-100),12)
+			pygame.draw.line(screen, game_settings.color_white, (x_pos,  y_pos - 100), (x_pos + 100, y_pos), 12)
+		else:
+			pygame.draw.circle(screen,game_settings.color_white,(x_pos+60, y_pos-50), 70, width=12)
 	
 	pygame.display.update()
+
 
 def choose_turn(game_settings):
 	game_settings.players_turn = random.choice([True,False])
 	return
 
-def pc_turn():
-	print("Yeah")
 
 def player_input(game_settings, screen, width, height, mouse, event):
+	
 	if event.type == pygame.MOUSEBUTTONDOWN:
 		click_boxes(game_settings, screen, width, height, mouse)
+
+def pc_turn(game_settings, screen, width, height, mouse, event):
+	if game_settings.diff_level == 1:
+		easy_ai(game_settings, screen, width, height, mouse, event)
+	elif game_settings.diff_level == 2:
+		normal_ai(game_settings)
+	elif game_settings.diff_level == 2:
+		hard_ai(game_settings)
+
+def easy_ai(game_settings, screen, width, height, mouse, event):
+	
+	try:
+		taken_by_pc = random.choice(game_settings.available_squares)
+	except IndexError:
+		game_over(screen,width,height, game_settings, "Draw!")
+	else:
+		game_settings.computers_squares.append (taken_by_pc)
+		game_settings.available_squares.remove (taken_by_pc)
+		
+
+	print ("Available = " + str(game_settings.available_squares))
+	if not game_settings.available_squares:
+		game_over(screen,width,height, game_settings, "Draw!")
+	print ("Players = " + str(game_settings.players_squares))
+	if {"a1", "a2", "a3"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	elif {"b1", "b2", "b3"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	elif {"c1", "c2", "c3"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	elif {"a1", "b1", "c1"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	elif {"a2", "b2", "c2"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	elif {"a3", "b3", "c3"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	elif {"a1", "b2", "c3"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	elif {"a3", "b2", "c1"}.issubset(set(game_settings.players_squares)):
+		game_over(screen,width,height, game_settings, "You win!")
+	print ("Computers = " + str(game_settings.computers_squares))
+	if {"a1", "a2", "a3"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+	elif {"b1", "b2", "b3"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+	elif {"c1", "c2", "c3"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+	elif {"a1", "b1", "c1"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+	elif {"a2", "b2", "c2"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+	elif {"a3", "b3", "c3"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+	elif {"a1", "b2", "c3"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+	elif {"a3", "b2", "c1"}.issubset(set(game_settings.computers_squares)):
+		game_over(screen,width,height, game_settings, "You lose")
+
+
+	print("Your turn!")
+	game_settings.players_turn = True
+
+
+def game_over(screen,width,height, game_settings, message):
+
+	# rendering a text written in font as defined in ttt_settings
+	continue_game = game_settings.start_menu_font.render('Continue' , True , game_settings.font_color)
+	quit_game = game_settings.start_menu_font.render('Quit' , True , game_settings.font_color)
+	text_screen = game_settings.start_menu_font.render(message , True , game_settings.font_color)
+		
+	while True:
+		
+		screen.fill(game_settings.bg_color)
+		
+		for ev in pygame.event.get():
+			
+			if ev.type == pygame.QUIT:
+				pygame.quit()
+
+			#checks if a mouse is clicked
+			if ev.type == pygame.MOUSEBUTTONDOWN:
+
+				#determines whether the player is usin x's or o's
+				if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:
+					game_settings.available_squares = ["a1","a2","a3", "b1", "b2", "b3", "c1", "c2", "c3"]
+					game_settings.computers_squares = []
+					game_settings.players_squares = []
+					return
+
+				if width/2 <= mouse[0] <= width/2+140 and height/3+60 <= mouse[1] <= height/3+100:
+					pygame.quit()
+
+		# stores the (x,y) coordinates into the variable as a tuple
+		mouse = pygame.mouse.get_pos()
+		
+		# if mouse is hovered on a button it changes to lighter shade
+		if width/2 <= mouse[0] <= width/2+140 and height/3 <= mouse[1] <= height/3+40:
+			pygame.draw.rect(screen,game_settings.color_light,[width/2,height/3, 140,40])
+		else:
+			pygame.draw.rect(screen,game_settings.color_dark,[width/2,height/3, 140,40])
+
+		if width/2 <= mouse[0] <= width/2+140 and height/3+60 <= mouse[1] <= height/3+100:
+			pygame.draw.rect(screen,game_settings.color_light,[width/2,height/3+60, 140,40])
+		else:
+			pygame.draw.rect(screen,game_settings.color_dark,[width/2,height/3+60, 140,40])
+
+		# superimposing the text onto our button
+		screen.blit(continue_game, (width/2,height/3))
+		screen.blit(quit_game, (width/2,height/3+60))
+		screen.blit(text_screen, (width/2-500,height/3-100))
+
+		# updates the frames of the game
+		pygame.display.update()
+
+
 
 
 
