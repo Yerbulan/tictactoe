@@ -1,7 +1,6 @@
 import sys
 
 import pygame
-from pygame.sprite import Group
 
 import ttt_functions as tf
 import ttt_settings as tt
