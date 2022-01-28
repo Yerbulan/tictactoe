@@ -2,7 +2,6 @@ import sys
 
 import pygame
 
-import ttt_functions as tf
 import ttt_settings as tt
 import game_screens as gs
 
