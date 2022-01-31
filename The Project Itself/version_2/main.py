@@ -3,7 +3,7 @@ import sys
 import pygame
 
 import ttt_settings as tt
-import game_screens as gs
+import graphics as gs
 
 # Initialize pygame, settings, and screen object.
 pygame.init()
@@ -11,12 +11,14 @@ pygame.init()
 game_settings = tt.Settings()
 screen = pygame.display.set_mode((game_settings.screen_width,game_settings.screen_height))
 pygame.display.set_caption("Tic Tac Toe by Yerbulan!")
+not_started = True
 
 
-# Here we go, let's start with a start menu
-gs.display_screen(game_settings, screen, "black", "Quit", "Start")
-
-
-run_game()
+def start_screen():
+	while not_started:
+		gs.create_display(screen, game_settings.bg_color)
+		
+		
+start_screen()
 
 

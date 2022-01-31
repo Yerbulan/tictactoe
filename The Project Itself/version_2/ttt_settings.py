@@ -15,7 +15,7 @@ class Settings():
 		# light shade of the button
 		self.color_light = (170,170,170)
 		# dark shade of the button
-		self.color_dark = (100,100,100)
+		self.menu_button_color = (100,100,100)
 		self.color_white = (255,255,255)
 		self.players_turn = True
 		self.player_x = False
