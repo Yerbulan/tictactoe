@@ -7,7 +7,6 @@ import game_logic as gl
 
 def start_screen(game_settings, screen, w_u, h_u):
 	while game_settings.start_screen_on == True:
-		
 		gs.create_display(game_settings, screen)
 		gs.create_button(game_settings, screen, w_u*1.8, w_u*3, h_u*2.8, h_u*3.6)
 		gs.create_button(game_settings, screen, w_u*1.8, w_u*3, h_u*4.3, h_u*5.1)
@@ -52,24 +51,40 @@ def choose_x_o(game_settings, screen, w_u, h_u):
 			gi.choose_x_o_button(game_settings, screen, w_u, h_u, event)
 
 def start_game(game_settings, screen, w_u, h_u):
-	while True:
-		gl.decide_turn(game_settings)
+	gl.decide_turn(game_settings)
+	while game_settings.game_active == True:
 		gs.create_display(game_settings, screen)
 		gs.create_grid(game_settings, screen, w_u, h_u)
 		
 		for event in pygame.event.get():
-			mouse = pygame.mouse.get_pos(event)
 			gi.check_events(event)
 			gl.check_turn(game_settings, screen, w_u, h_u)
 		
 		pygame.display.update()
 
-		
-			
-	
+def game_result(game_settings, screen, w_u, h_u):
+	while True:
+		gs.create_finishline(game_settings, screen, w_u, h_u)
 
-		
+		for event in pygame.event.get():
+			gi.check_events(event)
 
-			
+		pygame.display.update()
 
-# def game_over()
+		# gi.any_button_to_cont()
+
+def game_over_screen(game_settings, screen, w_u, h_u):
+	while game_settings.game_active == False:
+		gs.create_display(game_settings, screen)
+		gs.create_button(game_settings, screen, w_u*2.8, w_u*5, h_u*4.8, h_u*5.6)
+		gs.create_button(game_settings, screen, w_u*5.8, w_u*7, h_u*4.8, h_u*5.6)
+		gs.create_onscreen_text(game_settings, screen, w_u*4.5 , h_u*3, str(game_settings.result))
+		gs.create_onscreen_text(game_settings, screen, w_u*3 , h_u*5, "PLAY AGAIN")
+		gs.create_onscreen_text(game_settings, screen, w_u*6 , h_u*5, "QUIT")
+						
+		pygame.display.update()
+
+		for event in pygame.event.get():
+			gi.check_events(event)
+			gi.quit_button (event, w_u*5.8, w_u*7, h_u*4.8, h_u*5.6)
+			gi.start_button (game_settings, screen, w_u, h_u, event, w_u*2.8, w_u*5, h_u*4.8, h_u*5.6)
