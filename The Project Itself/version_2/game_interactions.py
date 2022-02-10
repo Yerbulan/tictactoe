@@ -58,9 +58,10 @@ def choose_x_o_button(game_settings, screen, w_u, h_u, event):
 			game_settings.game_active = True
 			gsq.start_game(game_settings, screen, w_u, h_u)	
 
-# def any_button_to_cont(game_settings, screen, w_u, h_u, event):
-# 	mouse = pygame.mouse.get_pos(event)
-# 	if event.type == pygame.MOUSEBUTTONDOWN:
+def any_button_to_cont(game_settings, screen, w_u, h_u, event):
+	if event.type == pygame.MOUSEBUTTONDOWN:
+		gsq.game_over_screen(game_settings, screen, w_u, h_u)
+
 
 
 			

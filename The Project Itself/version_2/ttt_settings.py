@@ -14,6 +14,7 @@ class Settings():
 		self.start_screen_on = True
 		self.diff_screen_on = True
 		self.xo_screen_on = True
+		self.game_result_screen = True
 
 		#game settings
 		self.diff_level = None
@@ -27,6 +28,7 @@ class Settings():
 		self.color_active = (60, 80, 100)
 		self.color_inactive = (100, 215, 240)
 		self.grid_color = (255, 255, 255)
+		self.fincolor = (190, 100, 100)
 		self.font = pygame.font.SysFont('Corbel',35)
 		self.x_o_font = pygame.font.SysFont('Corbel',180)
 

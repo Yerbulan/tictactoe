@@ -17,6 +17,7 @@ def check_turn(game_settings, screen, w_u, h_u):
 			ai_turn(game_settings, screen, w_u, h_u)
 	else:
 		game_settings.game_active = False
+		game_settings.game_result_screen = True
 		game_settings.available_squares = [[2,4,2,4],[4,6,2,4],[6,8,2,4],[2,4,4,6],[4,6,4,6],[6,8,4,6],[2,4,6,8],[4,6,6,8],[6,8,6,8]]
 		game_settings.player_squares.clear()
 		game_settings.ai_squares.clear()
@@ -71,7 +72,7 @@ def normal_ai(game_settings, screen, w_u, h_u, xo):
 	check_endgame(game_settings, screen, w_u, h_u)
 
 def hard_ai(game_settings, screen, w_u, h_u, xo):
-	ai_turn = random.choice(game_settings.available_squares)
+	ai_turn = calculate_hard_ai_turn(game_settings)
 	game_settings.available_squares.remove(ai_turn)
 	game_settings.ai_squares.add(str(ai_turn))
 	gs.create_onscreen_text(game_settings, screen, w_u*(ai_turn[0]+0.6), h_u*(ai_turn[2]+0.1), xo, 1)
@@ -94,8 +95,30 @@ def check_endgame(game_settings, screen, w_u, h_u):
 	if not game_settings.available_squares:
 		game_settings.result = "DRAW"
 		game_settings.game_active = False
+		game_settings.current_win_combination = None
 		check_turn(game_settings, screen, w_u, h_u)
 	check_turn(game_settings, screen, w_u, h_u)
+
+def calculate_hard_ai_turn(game_settings):
+	
+	
+	while True:
+		for square in game_settings.available_squares:
+			possible_player_squares = game_settings.player_squares.copy()
+			possible_player_squares.add(str(square))
+			for combination in game_settings.winning_combinations:
+				if combination.issubset(possible_player_squares):
+					return square
+		for square in game_settings.available_squares:
+			possible_ai_squares = game_settings.ai_squares.copy()
+			possible_ai_squares.add(str(square))
+			for combination in game_settings.winning_combinations:
+				if combination.issubset(possible_ai_squares):
+					return square
+		square = random.choice(game_settings.available_squares)
+		return square
+
+
 
 
 

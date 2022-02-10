@@ -63,22 +63,21 @@ def start_game(game_settings, screen, w_u, h_u):
 		pygame.display.update()
 
 def game_result(game_settings, screen, w_u, h_u):
-	while True:
+	while game_settings.game_result_screen == True:
 		gs.create_finishline(game_settings, screen, w_u, h_u)
+		gs.create_onscreen_text(game_settings, screen, w_u*4.5 , h_u*0.5, str(game_settings.result))
+		gs.create_onscreen_text(game_settings, screen, w_u*3.5 , h_u*1.25, "Click anywhere to continue")
 
 		for event in pygame.event.get():
 			gi.check_events(event)
-
+			gi.any_button_to_cont(game_settings, screen, w_u, h_u, event)
 		pygame.display.update()
-
-		# gi.any_button_to_cont()
 
 def game_over_screen(game_settings, screen, w_u, h_u):
 	while game_settings.game_active == False:
 		gs.create_display(game_settings, screen)
 		gs.create_button(game_settings, screen, w_u*2.8, w_u*5, h_u*4.8, h_u*5.6)
 		gs.create_button(game_settings, screen, w_u*5.8, w_u*7, h_u*4.8, h_u*5.6)
-		gs.create_onscreen_text(game_settings, screen, w_u*4.5 , h_u*3, str(game_settings.result))
 		gs.create_onscreen_text(game_settings, screen, w_u*3 , h_u*5, "PLAY AGAIN")
 		gs.create_onscreen_text(game_settings, screen, w_u*6 , h_u*5, "QUIT")
 						

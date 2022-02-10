@@ -38,21 +38,21 @@ def create_grid(game_settings, screen, w_u, h_u):
 def create_finishline(game_settings, screen, w_u, h_u):
 	if game_settings.current_win_combination:
 		if game_settings.current_win_combination == {"[2, 4, 2, 4]","[4, 6, 2, 4]","[6, 8, 2, 4]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*2, h_u*3), (w_u*8, h_u*3), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*1.95, h_u*3.05), (w_u*7.95, h_u*3.05), 8)
 		elif game_settings.current_win_combination ==	{"[2, 4, 4, 6]","[4, 6, 4, 6]","[6, 8, 4, 6]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*2, h_u*5), (w_u*8, h_u*5), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*1.95, h_u*5.05), (w_u*7.95, h_u*5.05), 8)
 		elif game_settings.current_win_combination ==	{"[2, 4, 6, 8]","[4, 6, 6, 8]","[6, 8, 6, 8]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*2, h_u*7), (w_u*8, h_u*7), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*1.95, h_u*7.05), (w_u*7.95, h_u*7.05), 8)
 		elif game_settings.current_win_combination ==	{"[2, 4, 2, 4]","[2, 4, 4, 6]","[2, 4, 6, 8]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*3, h_u*2), (w_u*3, h_u*8), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*2.95, h_u*2.05), (w_u*2.95, h_u*8.05), 8)
 		elif game_settings.current_win_combination ==	{"[4, 6, 2, 4]","[4, 6, 4, 6]","[4, 6, 6, 8]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*5, h_u*2), (w_u*5, h_u*8), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*4.95, h_u*2.05), (w_u*4.95, h_u*8.05), 8)
 		elif game_settings.current_win_combination ==	{"[6, 8, 2, 4]","[6, 8, 4, 6]","[6, 8, 6, 8]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*7, h_u*2), (w_u*7, h_u*8), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*6.95, h_u*2.05), (w_u*6.95, h_u*8.05), 8)
 		elif game_settings.current_win_combination ==	{"[2, 4, 2, 4]","[4, 6, 4, 6]","[6, 8, 6, 8]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*3, h_u*3), (w_u*7, h_u*7), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*2.95, h_u*3.05), (w_u*6.95, h_u*7.05), 8)
 		elif game_settings.current_win_combination ==	{"[6, 8, 2, 4]","[4, 6, 4, 6]","[2, 4, 6, 8]"}:
-			pygame.draw.line(screen, game_settings.grid_color, (w_u*7, h_u*3), (w_u*3, h_u*7), 8)
+			pygame.draw.line(screen, game_settings.fincolor, (w_u*6.95, h_u*3.05), (w_u*2.95, h_u*7.05), 8)
 	else:
 		return
 
