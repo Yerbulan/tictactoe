@@ -1,6 +1,6 @@
 """This is the main file for TicTacToe the game"""
 
-# importing the pygame module and other modules needed for the game
+# importing the pygame module and other modules needed for the game to run
 # check out each module's docstring to find out how they work and what they do
 import pygame
 import game_sequence as gsq
