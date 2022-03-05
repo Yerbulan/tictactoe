@@ -6,4 +6,4 @@ I may have overdone this with docstrings and comments:) I really wanted anyone t
 
 Please feel free to leave feedback.
 
-to start the game itself run: C:\Users\Yerbulan\My Drive\03_Python\01_Learning\04_Own_Projects\TicTacToe\The Project Itself\version_2\main
+to start the game itself run: The Project Itself\version_2\main

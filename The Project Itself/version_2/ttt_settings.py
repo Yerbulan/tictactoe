@@ -3,15 +3,17 @@
 import pygame
 
 
-class Settings():
+class Settings:
     """A class to store all settings for TicTacToe."""
 
     def __init__(self):
-        # screen size, feel free to change this, everything in the game will scale accordingly
+        # screen size, feel free to change this, everything in the game will
+        # scale accordingly
         self.screen_width = 1366
         self.screen_height = 768
 
-        # screens on and off, these switches are needed to turn on and off screens depending on
+        # screens on and off, these switches are needed to turn on and off
+        # screens depending on
         # what's being used at the moment
         self.start_screen_on = True
         self.diff_screen_on = True
@@ -35,7 +37,8 @@ class Settings():
         # game_logic
         self.players_turn = True
         self.game_active = True
-        self.available_squares = [[2, 4, 2, 4], [4, 6, 2, 4], [6, 8, 2, 4], [2, 4, 4, 6], [4, 6, 4, 6], [6, 8, 4, 6],
+        self.available_squares = [[2, 4, 2, 4], [4, 6, 2, 4], [6, 8, 2, 4],
+                                  [2, 4, 4, 6], [4, 6, 4, 6], [6, 8, 4, 6],
                                   [2, 4, 6, 8], [4, 6, 6, 8], [6, 8, 6, 8]]
         self.player_squares = set()
         self.ai_squares = set()
